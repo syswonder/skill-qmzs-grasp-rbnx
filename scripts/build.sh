@@ -7,4 +7,4 @@ PKG="${RBNX_PACKAGE_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 FLAGS=(--mcp)
 [[ "${RBNX_BUILD_CLEAN:-}" == "1" ]] && FLAGS+=(--clean)
 rbnx codegen -p "$PKG" "${FLAGS[@]}"
-echo "[arm7aix_grasp] build done"
+echo "[qmzs_grasp] build done"

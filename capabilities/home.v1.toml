@@ -1,13 +1,13 @@
-# robonix/skill/arm7aix_grasp/home — 关节空间复位到 home_joints，手不动作。
+# robonix/skill/qmzs_grasp/home — 关节空间复位到 home_joints，手不动作。
 #
 # 用户意图：“复位 / 回原点 / 回 home”。经 arm7aix_controller 的 joint_command
 # 下发七轴目标并等 joint_states 进入 joint_tolerance_rad；手保持当前开合状态
 # （手里有东西时先 release/place）。请求无字段（工具无参数）。
 [contract]
-id      = "robonix/skill/arm7aix_grasp/home"
+id      = "robonix/skill/qmzs_grasp/home"
 version = "1"
 kind    = "skill"
-idl     = "arm7aix_grasp/srv/Home.srv"
+idl     = "qmzs_grasp/srv/Home.srv"
 
 [mode]
 type = "rpc"

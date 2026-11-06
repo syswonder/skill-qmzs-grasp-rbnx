@@ -1,6 +1,6 @@
 manifestVersion: 1
 
-# arm7aix_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能。
+# qmzs_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能。
 #
 # 高层抓取流程（grab/pick/release/home/place）＋底层视觉/运动辅助工具
 # （pixel_to_pose/move_to_pixel/detect_object/move_to_object/calibration_status/
@@ -23,7 +23,7 @@ manifestVersion: 1
 # 环境变量 VLM_BASE_URL / VLM_API_KEY / VLM_MODEL。
 
 package:
-  name: robonix.skill.arm7aix.grasp
+  name: robonix.skill.qmzs.grasp
   version: 0.1.0
   description: >-
     ARM7AIX 七轴 + LinkerHand O6 抓取技能：固定位姿/感知抓取、放置、释放、
@@ -38,31 +38,31 @@ package:
 build: bash scripts/build.sh
 start: bash scripts/start.sh
 
-# 本包自己的 MCP 契约（capabilities/*.v1.toml + capabilities/lib/arm7aix_grasp/srv/）。
+# 本包自己的 MCP 契约（capabilities/*.v1.toml + capabilities/lib/qmzs_grasp/srv/）。
 capabilities:
-  - name: robonix/skill/arm7aix_grasp/driver
+  - name: robonix/skill/qmzs_grasp/driver
     path: capabilities/driver.v1.toml
-  - name: robonix/skill/arm7aix_grasp/grab
+  - name: robonix/skill/qmzs_grasp/grab
     path: capabilities/grab.v1.toml
-  - name: robonix/skill/arm7aix_grasp/pick
+  - name: robonix/skill/qmzs_grasp/pick
     path: capabilities/pick.v1.toml
-  - name: robonix/skill/arm7aix_grasp/release
+  - name: robonix/skill/qmzs_grasp/release
     path: capabilities/release.v1.toml
-  - name: robonix/skill/arm7aix_grasp/home
+  - name: robonix/skill/qmzs_grasp/home
     path: capabilities/home.v1.toml
-  - name: robonix/skill/arm7aix_grasp/place
+  - name: robonix/skill/qmzs_grasp/place
     path: capabilities/place.v1.toml
-  - name: robonix/skill/arm7aix_grasp/pixel_to_pose
+  - name: robonix/skill/qmzs_grasp/pixel_to_pose
     path: capabilities/pixel_to_pose.v1.toml
-  - name: robonix/skill/arm7aix_grasp/move_to_pixel
+  - name: robonix/skill/qmzs_grasp/move_to_pixel
     path: capabilities/move_to_pixel.v1.toml
-  - name: robonix/skill/arm7aix_grasp/detect_object
+  - name: robonix/skill/qmzs_grasp/detect_object
     path: capabilities/detect_object.v1.toml
-  - name: robonix/skill/arm7aix_grasp/move_to_object
+  - name: robonix/skill/qmzs_grasp/move_to_object
     path: capabilities/move_to_object.v1.toml
-  - name: robonix/skill/arm7aix_grasp/calibration_status
+  - name: robonix/skill/qmzs_grasp/calibration_status
     path: capabilities/calibration_status.v1.toml
-  - name: robonix/skill/arm7aix_grasp/snapshot
+  - name: robonix/skill/qmzs_grasp/snapshot
     path: capabilities/snapshot.v1.toml
 
 # 运行时通过 atlas 发现的硬件契约（本技能是纯消费者）。

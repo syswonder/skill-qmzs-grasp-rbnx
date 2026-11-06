@@ -8,10 +8,10 @@
 #   - 可选 workspace 边界与单次最大位移（config 里为空则不限制）。
 # dry_run=true 时只算不发，便于第一次现场联调。
 [contract]
-id          = "robonix/skill/arm7aix_grasp/move_to_pixel"
+id          = "robonix/skill/qmzs_grasp/move_to_pixel"
 version     = "1"
 kind        = "skill"
-idl         = "arm7aix_grasp/srv/MoveToPixel.srv"
+idl         = "qmzs_grasp/srv/MoveToPixel.srv"
 description = "Compute the base_link pose for a pixel (calibrated XY + configured/manual Z and fixed quaternion) and move the arm to it via the arm primitive pos_command; waits for end_pose feedback and reports reached/timed_out. Blocks until done."
 
 [mode]

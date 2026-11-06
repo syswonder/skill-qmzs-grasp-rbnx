@@ -1,4 +1,4 @@
-# arm7aix_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能
+# qmzs_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能
 
 Robonix 技能（skill）包，参考 [`robonix.skill.jaka_grasp`](https://packages.robonix.ai/packages/robonix.skill.jaka_grasp/)
 组织。两部分：
@@ -49,14 +49,14 @@ Robonix 技能（skill）包，参考 [`robonix.skill.jaka_grasp`](https://packa
 ## 构建与启动
 
 ```bash
-rbnx build -p skills/arm7aix_grasp
+rbnx build -p skills/qmzs_grasp
 # 或随部署一起：./build.sh
 ```
 
 部署 manifest 的 `skill:` 段声明本包；boot 后停在 INACTIVE，第一次 MCP 调用时
 由 executor 激活。配置字段见 [config.spec](config.spec)，接口语义见
 [CAPABILITY.md](CAPABILITY.md)，完整现场说明见
-[docs/arm7aix_grasp.md](../../docs/arm7aix_grasp.md)。
+[docs/qmzs_grasp.md](../../docs/qmzs_grasp.md)。
 
 ## 测试
 

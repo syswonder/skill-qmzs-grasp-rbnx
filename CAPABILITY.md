@@ -2,9 +2,9 @@
 description: ARM7AIX 七轴 + LinkerHand O6 抓取技能（参考 jaka_grasp）。高层：grab 固定位姿抓取（张手→两级接近→闭合→抬起）、pick 感知抓取（VLM 或像素定位）、release 原地张手、place 放下、home 关节复位；底层：pixel_to_pose/move_to_pixel/detect_object/move_to_object/calibration_status/snapshot。手眼标定像素→base_link XY + 人工 Z + 固定四元数；两级接近避免碰倒物体；手部经 o6_hand 原语 hand/move_joint 下发官方 open/fist 预设；VLM 需要 OpenAI 兼容多模态端点；标定文件自动重载。
 ---
 
-# arm7aix_grasp — 七轴 + O6 抓取技能
+# qmzs_grasp — 七轴 + O6 抓取技能
 
-Provider id `arm7aix_grasp`，namespace `robonix/skill/arm7aix_grasp`。LLM 工具名：
+Provider id `qmzs_grasp`，namespace `robonix/skill/qmzs_grasp`。LLM 工具名：
 
 - 抓取流程：`grab` / `pick` / `release` / `place` / `home`
 - 底层辅助：`pixel_to_pose` / `move_to_pixel` / `detect_object` /

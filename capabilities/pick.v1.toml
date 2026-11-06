@@ -1,4 +1,4 @@
-# robonix/skill/arm7aix_grasp/pick — 感知抓取：找目标 → 位姿 → 张手 → 两级接近
+# robonix/skill/qmzs_grasp/pick — 感知抓取：找目标 → 位姿 → 张手 → 两级接近
 # → 闭合手 → 抬起。
 #
 # 用户意图：“抓起 / 拿起来 / pick up”。定位二选一：
@@ -6,10 +6,10 @@
 #   - pixel 为空：用 VLM 开放词汇检测 object（需相机原语 + vlm_* 配置）。
 # 目标 Z/四元数为固定配置（allow_tool_overrides=false）。同步阻塞到流程结束。
 [contract]
-id      = "robonix/skill/arm7aix_grasp/pick"
+id      = "robonix/skill/qmzs_grasp/pick"
 version = "1"
 kind    = "skill"
-idl     = "arm7aix_grasp/srv/Pick.srv"
+idl     = "qmzs_grasp/srv/Pick.srv"
 
 [mode]
 type = "rpc"

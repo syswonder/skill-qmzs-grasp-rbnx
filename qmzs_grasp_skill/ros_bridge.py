@@ -18,7 +18,7 @@ import time
 from dataclasses import dataclass
 from typing import Optional, Sequence
 
-log = logging.getLogger("arm7aix_grasp.ros")
+log = logging.getLogger("qmzs_grasp.ros")
 
 
 class RosBridgeError(RuntimeError):
@@ -120,7 +120,7 @@ class RosBridge:
         try:
             if not rclpy.ok():
                 rclpy.init(args=None)
-            node = rclpy.create_node("arm7aix_grasp")
+            node = rclpy.create_node("qmzs_grasp")
         except Exception as exc:  # noqa: BLE001
             raise RosBridgeError(f"初始化 rclpy 节点失败：{exc}") from exc
 

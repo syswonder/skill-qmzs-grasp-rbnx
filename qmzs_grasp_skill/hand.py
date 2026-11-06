@@ -20,7 +20,7 @@ import time
 from dataclasses import dataclass
 from typing import Optional, Sequence
 
-log = logging.getLogger("arm7aix_grasp.hand")
+log = logging.getLogger("qmzs_grasp.hand")
 
 AXIS_NAMES = (
     "thumb_cmc_pitch",

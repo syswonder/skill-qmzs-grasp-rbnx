@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: MulanPSL-2.0
-"""arm7aix_grasp 离线回归测试：标定解析、去畸变/单应投影、配置解析、缓存重载。
+"""qmzs_grasp 离线回归测试：标定解析、去畸变/单应投影、配置解析、缓存重载。
 
 不依赖 ROS、相机或机械臂。运行：
-    .venv/bin/python -m unittest tests.test_arm7aix_grasp -v
+    .venv/bin/python -m unittest tests.test_qmzs_grasp -v
 """
 from __future__ import annotations
 
@@ -18,36 +18,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]  # package/repo root
 sys.path.insert(0, str(ROOT))
 
-from arm7aix_grasp_skill.calibration import (  # noqa: E402
+from qmzs_grasp_skill.calibration import (  # noqa: E402
     Calibration,
     CalibrationCache,
     CalibrationError,
     Projection,
     read_orientation_file,
 )
-from arm7aix_grasp_skill.config import (  # noqa: E402
+from qmzs_grasp_skill.config import (  # noqa: E402
     ConfigError,
     SkillConfig,
     check_workspace,
     parse_metres,
     parse_quaternion,
 )
-from arm7aix_grasp_skill.grasp import (  # noqa: E402
+from qmzs_grasp_skill.grasp import (  # noqa: E402
     grasp_target,
     home_arm,
     place_target,
     release_hand,
 )
-from arm7aix_grasp_skill.hand import (  # noqa: E402
+from qmzs_grasp_skill.hand import (  # noqa: E402
     AXIS_NAMES,
     HandError,
     normalized_from_raw,
     preset_values,
 )
-from arm7aix_grasp_skill.motion import perform_move, plan_waypoints  # noqa: E402
-from arm7aix_grasp_skill.ros_bridge import PoseSample, quaternion_angle  # noqa: E402
-from arm7aix_grasp_skill.target import Target, TargetResolver  # noqa: E402
-from arm7aix_grasp_skill.vlm import (  # noqa: E402
+from qmzs_grasp_skill.motion import perform_move, plan_waypoints  # noqa: E402
+from qmzs_grasp_skill.ros_bridge import PoseSample, quaternion_angle  # noqa: E402
+from qmzs_grasp_skill.target import Target, TargetResolver  # noqa: E402
+from qmzs_grasp_skill.vlm import (  # noqa: E402
     Detection,
     VlmError,
     detect_objects,

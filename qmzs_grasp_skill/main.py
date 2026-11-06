@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MulanPSL-2.0
-"""arm7aix_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能。
+"""qmzs_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能。
 
 高层抓取流程（参考 robonix.skill.jaka_grasp）：
 
@@ -43,7 +43,7 @@ from typing import Optional
 
 from robonix_api import ATLAS, Deferred, Err, Ok, Skill
 
-from arm7aix_grasp_mcp import (  # noqa: E402  (codegen 产物)
+from qmzs_grasp_mcp import (  # noqa: E402  (codegen 产物)
     CalibrationStatus_Request,
     CalibrationStatus_Response,
     DetectObject_Request,
@@ -68,38 +68,38 @@ from arm7aix_grasp_mcp import (  # noqa: E402  (codegen 产物)
     Snapshot_Response,
 )
 
-from arm7aix_grasp_skill.calibration import CalibrationCache, CalibrationError
-from arm7aix_grasp_skill.config import (
+from qmzs_grasp_skill.calibration import CalibrationCache, CalibrationError
+from qmzs_grasp_skill.config import (
     ConfigError,
     SkillConfig,
     check_workspace,
     finite,
 )
-from arm7aix_grasp_skill.grasp import (
+from qmzs_grasp_skill.grasp import (
     grasp_target,
     home_arm,
     place_target,
     release_hand,
 )
-from arm7aix_grasp_skill.hand import HandError, connect_hand
-from arm7aix_grasp_skill.motion import perform_move
-from arm7aix_grasp_skill.ros_bridge import PoseSample, RosBridge, RosBridgeError
-from arm7aix_grasp_skill.target import Target, TargetResolver
-from arm7aix_grasp_skill.vlm import (
+from qmzs_grasp_skill.hand import HandError, connect_hand
+from qmzs_grasp_skill.motion import perform_move
+from qmzs_grasp_skill.ros_bridge import PoseSample, RosBridge, RosBridgeError
+from qmzs_grasp_skill.target import Target, TargetResolver
+from qmzs_grasp_skill.vlm import (
     VlmError,
     detect_objects,
     draw_detections,
 )
 
 logging.basicConfig(
-    level=os.environ.get("ARM7AIX_GRASP_LOG_LEVEL", "INFO"),
-    format="[arm7aix_grasp] %(levelname)s %(message)s",
+    level=os.environ.get("QMZS_GRASP_LOG_LEVEL", "INFO"),
+    format="[qmzs_grasp] %(levelname)s %(message)s",
 )
-log = logging.getLogger("arm7aix_grasp")
+log = logging.getLogger("qmzs_grasp")
 
 skill = Skill(
-    id=os.environ.get("RBNX_INSTANCE_NAME", "arm7aix_grasp"),
-    namespace="robonix/skill/arm7aix_grasp",
+    id=os.environ.get("RBNX_INSTANCE_NAME", "qmzs_grasp"),
+    namespace="robonix/skill/qmzs_grasp",
 )
 
 _ARM_CONTRACTS = {
@@ -137,19 +137,19 @@ _state: dict = {
 def _require_config() -> SkillConfig:
     if _state["config_error"]:
         raise ConfigError(
-            f"arm7aix_grasp 配置无效：{_state['config_error']}；"
-            "请修改 manifest 里 skill: - name: arm7aix_grasp 的 config 后重启"
+            f"qmzs_grasp 配置无效：{_state['config_error']}；"
+            "请修改 manifest 里 skill: - name: qmzs_grasp 的 config 后重启"
         )
     config = _state["config"]
     if config is None:
-        raise ConfigError("arm7aix_grasp 尚未初始化（config 未加载）")
+        raise ConfigError("qmzs_grasp 尚未初始化（config 未加载）")
     return config
 
 
 def _require_resolver() -> TargetResolver:
     resolver = _state["resolver"]
     if resolver is None:
-        raise ConfigError("arm7aix_grasp 尚未初始化（target resolver 未加载）")
+        raise ConfigError("qmzs_grasp 尚未初始化（target resolver 未加载）")
     return resolver
 
 
@@ -202,7 +202,7 @@ def _require_grasp_pose(config: SkillConfig):
     if not config.grasp_pose:
         raise ConfigError(
             "未配置 grasp_pose（[x, y, z] 米）：grab 需要固定抓取位姿；"
-            "感知抓取请用 pick，或在本部署 manifest 的 arm7aix_grasp config 里配置"
+            "感知抓取请用 pick，或在本部署 manifest 的 qmzs_grasp config 里配置"
         )
     return config.grasp_pose
 
@@ -537,7 +537,7 @@ def init(cfg) -> Ok | Err:
         config = SkillConfig.from_cfg(cfg)
     except ConfigError as exc:
         _state["config_error"] = str(exc)
-        log.error("invalid arm7aix_grasp config: %s", exc)
+        log.error("invalid qmzs_grasp config: %s", exc)
         return Ok()  # 错误在工具调用时返回，便于改配置后重启
     _state["config"] = config
     cache = CalibrationCache(config)
@@ -632,7 +632,7 @@ def shutdown() -> None:
 
 # ── MCP 工具 ────────────────────────────────────────────────────────
 
-@skill.mcp("robonix/skill/arm7aix_grasp/pixel_to_pose")
+@skill.mcp("robonix/skill/qmzs_grasp/pixel_to_pose")
 def pixel_to_pose(req: PixelToPose_Request) -> PixelToPose_Response:
     """像素(u,v) → 基座(base_link)位姿，只计算不运动。
 
@@ -679,7 +679,7 @@ def pixel_to_pose(req: PixelToPose_Request) -> PixelToPose_Response:
         return PixelToPose_Response(ok=False, message=_fail("pixel_to_pose", exc))
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/move_to_pixel")
+@skill.mcp("robonix/skill/qmzs_grasp/move_to_pixel")
 def move_to_pixel(req: MoveToPixel_Request) -> MoveToPixel_Response:
     """把机械臂移动到像素 (u,v) 对应的位姿：标定 XY + 人工 Z + 固定四元数。
 
@@ -733,7 +733,7 @@ def move_to_pixel(req: MoveToPixel_Request) -> MoveToPixel_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/detect_object")
+@skill.mcp("robonix/skill/qmzs_grasp/detect_object")
 def detect_object(req: DetectObject_Request) -> DetectObject_Response:
     """用 VLM 在相机画面里找目标物体，返回它的像素和机械臂目标位姿（不运动）。
 
@@ -799,7 +799,7 @@ def detect_object(req: DetectObject_Request) -> DetectObject_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/move_to_object")
+@skill.mcp("robonix/skill/qmzs_grasp/move_to_object")
 def move_to_object(req: MoveToObject_Request) -> MoveToObject_Response:
     """用 VLM 找到目标物体，然后把机械臂移动到它的目标位姿。
 
@@ -869,7 +869,7 @@ def move_to_object(req: MoveToObject_Request) -> MoveToObject_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/grab")
+@skill.mcp("robonix/skill/qmzs_grasp/grab")
 def grab(_req: Grab_Request) -> Grab_Response:
     """固定位姿抓取：在配置的 grasp_pose 处张手 → 两级接近 → 闭合手 → 抬起。
 
@@ -910,7 +910,7 @@ def grab(_req: Grab_Request) -> Grab_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/pick")
+@skill.mcp("robonix/skill/qmzs_grasp/pick")
 def pick(req: Pick_Request) -> Pick_Response:
     """感知抓取：找到目标 → 计算位姿 → 张手 → 两级接近 → 闭合手 → 抬起。
 
@@ -980,7 +980,7 @@ def pick(req: Pick_Request) -> Pick_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/release")
+@skill.mcp("robonix/skill/qmzs_grasp/release")
 def release(_req: Release_Request) -> Release_Response:
     """原地张开 O6 手，零机械臂运动。
 
@@ -1015,7 +1015,7 @@ def release(_req: Release_Request) -> Release_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/place")
+@skill.mcp("robonix/skill/qmzs_grasp/place")
 def place(_req: Place_Request) -> Place_Response:
     """把手中物体放下：hover → 下降到放置点 → 张开手 → 抬回 hover。
 
@@ -1053,7 +1053,7 @@ def place(_req: Place_Request) -> Place_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/home")
+@skill.mcp("robonix/skill/qmzs_grasp/home")
 def home(_req: Home_Request) -> Home_Response:
     """关节空间复位到配置的 home_joints（rad）；手保持当前开合状态。
 
@@ -1094,7 +1094,7 @@ def home(_req: Home_Request) -> Home_Response:
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/calibration_status")
+@skill.mcp("robonix/skill/qmzs_grasp/calibration_status")
 def calibration_status(_req: CalibrationStatus_Request) -> CalibrationStatus_Response:
     """查看当前标定与默认目标（只读）：单应矩阵来源、相机内参、覆盖区域、
     默认 Z/四元数及其来源、运动话题、VLM 配置。现场排障时先调用它确认配置。
@@ -1178,7 +1178,7 @@ def calibration_status(_req: CalibrationStatus_Request) -> CalibrationStatus_Res
         )
 
 
-@skill.mcp("robonix/skill/arm7aix_grasp/snapshot")
+@skill.mcp("robonix/skill/qmzs_grasp/snapshot")
 def snapshot(req: Snapshot_Request) -> Snapshot_Response:
     """抓取相机原语当前 RGB 画面并保存为 JPEG，返回文件路径和分辨率。
 

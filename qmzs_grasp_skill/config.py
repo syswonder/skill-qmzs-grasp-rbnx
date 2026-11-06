@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MulanPSL-2.0
-"""arm7aix_grasp 的配置解析（manifest 的 skill config → SkillConfig）。
+"""qmzs_grasp 的配置解析（manifest 的 skill config → SkillConfig）。
 
 约定：
 - 配置错误不直接让 on_init 失败（技能会停在 INACTIVE 等 executor 激活），
@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Optional, Sequence
 
-log = logging.getLogger("arm7aix_grasp.config")
+log = logging.getLogger("qmzs_grasp.config")
 
 DEFAULT_ARM_PROVIDER = "arm7aix_controller"
 DEFAULT_CAMERA_PROVIDER = "orbbec_camera"
@@ -167,12 +167,12 @@ def _camera_intrinsics(value: Any) -> Optional[dict]:
 # ── 路径解析 ─────────────────────────────────────────────────────────
 
 def _package_root() -> Path:
-    # <deploy>/skills/arm7aix_grasp/arm7aix_grasp_skill/config.py -> <deploy>/skills/arm7aix_grasp
+    # <deploy>/skills/qmzs_grasp/qmzs_grasp_skill/config.py -> <deploy>/skills/qmzs_grasp
     return Path(__file__).resolve().parents[1]
 
 
 def _deploy_root() -> Path:
-    # <deploy>/skills/arm7aix_grasp -> <deploy>
+    # <deploy>/skills/qmzs_grasp -> <deploy>
     return _package_root().parent.parent
 
 

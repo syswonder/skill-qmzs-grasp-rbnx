@@ -3,10 +3,10 @@
 # 返回：是否已标定、单应矩阵来源与文件路径、相机内参、标定覆盖区域、
 # 默认 Z / 四元数（以及它来自 orientation_path 还是 manifest）。现场排障用。
 [contract]
-id          = "robonix/skill/arm7aix_grasp/calibration_status"
+id          = "robonix/skill/qmzs_grasp/calibration_status"
 version     = "1"
 kind        = "skill"
-idl         = "arm7aix_grasp/srv/CalibrationStatus.srv"
+idl         = "qmzs_grasp/srv/CalibrationStatus.srv"
 description = "Report the loaded hand-eye calibration (homography source, camera intrinsics, workspace hull) and the effective default Z / fixed quaternion, including which source each value came from. Read-only; no motion."
 
 [mode]
