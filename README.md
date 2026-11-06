@@ -36,6 +36,17 @@ Robonix 技能（skill）包，参考 [`robonix.skill.jaka_grasp`](https://packa
 | `calibration_status` | 标定/目标/手部/话题/反馈状态 |
 | `snapshot` | 抓相机原语一帧存 JPEG |
 
+## 硬件验证
+
+2026-11-05 在 ARM7AIX 实验台上用**本仓库的 qmzs_grasp 技能**完成真机抓取：固定
+Orbbec 相机 + 桌面手眼标定，`pick` 定位桌面绿色方块后执行
+张手 → hover → 下降 → 闭合 O6 手 → 抬回 hover，**方块被夹起并抬离桌面**。
+详见 [VALIDATION.md](VALIDATION.md)。
+
+> 早先提交/PR 信息里 "Real-hardware grasp, place and home motion still require
+> on-site sign-off" 的说法已过时：抓取（pick/grab 流程）已真机验证；`place` /
+> `release` / `home` 不在这次验证范围内，未声明已验证。
+
 ## 依赖
 
 - 标定模型：部署内 `config/handeye/calibration.json`（固定相机桌面平面单应 +
