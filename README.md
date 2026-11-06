@@ -60,14 +60,13 @@ Orbbec 相机 + 桌面手眼标定，`pick` 定位桌面绿色方块后执行
 ## 构建与启动
 
 ```bash
-rbnx build -p skills/qmzs_grasp
-# 或随部署一起：./build.sh
+rbnx build -p .
+# 或：bash scripts/build.sh
 ```
 
 部署 manifest 的 `skill:` 段声明本包；boot 后停在 INACTIVE，第一次 MCP 调用时
-由 executor 激活。配置字段见 [config.spec](config.spec)，接口语义见
-[CAPABILITY.md](CAPABILITY.md)，完整现场说明见
-[docs/qmzs_grasp.md](../../docs/qmzs_grasp.md)。
+由 executor 激活。配置字段见 [config.spec](config.spec)，接口与限制见
+[CAPABILITY.md](CAPABILITY.md)；真机验证记录见 [VALIDATION.md](VALIDATION.md)。
 
 ## 测试
 
