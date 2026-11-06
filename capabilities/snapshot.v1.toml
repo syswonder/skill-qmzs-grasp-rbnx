@@ -1,0 +1,17 @@
+# 抓取相机原语的当前 RGB 画面并保存为 JPEG（只读，不运动）。
+#
+# 像素→位姿工具要求调用方给出像素；本工具用于没有现成视觉程序时快速取一张
+# 当前画面（路径返回给调用方/人），供外部检测程序量取像素坐标。
+# 相机契约经 atlas 解析（robonix/primitive/camera/rgb），没有相机时返回 ok=false。
+[contract]
+id          = "robonix/skill/arm7aix_grasp/snapshot"
+version     = "1"
+kind        = "skill"
+idl         = "arm7aix_grasp/srv/Snapshot.srv"
+description = "Grab the latest RGB frame from the camera primitive and save it as a JPEG file, returning the absolute path and image size. Useful for measuring pixel coordinates offline. Read-only; no arm motion."
+
+[mode]
+type = "rpc"
+
+[semantics]
+user_invocable = true

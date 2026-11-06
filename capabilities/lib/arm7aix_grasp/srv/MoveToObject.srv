@@ -1,0 +1,43 @@
+# 自然语言目标 → VLM 检测 → 位姿 → 直接运动到目标上方。
+#
+# 流程与 detect_object 相同（相机取帧 → VLM 有向框 → 抓取点 → 标定 XY +
+# 人工 Z + 固定四元数），随后发布 pos_command 并等 end_pose 到位。
+string object
+
+# 可选：覆盖目标法兰 Z（米，或 102.4mm 写法）。
+# 默认被忽略（allow_tool_overrides=false）：请留空，目标以配置的固定值为准。
+string z
+
+# 可选：覆盖固定四元数 "qx,qy,qz,qw"。
+# 默认被忽略（allow_tool_overrides=false）：请留空，不要自行猜测姿态。
+string quaternion
+---
+bool ok
+bool found
+bool reached
+bool timed_out
+string message
+string class_name
+
+float64 u
+float64 v
+
+# 目标位姿（base_link，米 + xyzw）。
+float64 x
+float64 y
+float64 z
+float64 qx
+float64 qy
+float64 qz
+float64 qw
+
+# 返回时最后一次 end_pose 实测值（没有反馈时为 0）。
+float64 final_x
+float64 final_y
+float64 final_z
+float64 final_qx
+float64 final_qy
+float64 final_qz
+float64 final_qw
+
+float64 elapsed_sec

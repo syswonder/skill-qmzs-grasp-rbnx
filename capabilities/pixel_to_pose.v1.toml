@@ -1,0 +1,21 @@
+# 像素 → 基座位姿（只计算，不运动）。
+#
+# 输入像素 (u, v) 与 handeye-calibration 的标定分辨率一致（默认 640x480），
+# 先用标定内参去畸变，再用平面单应矩阵得到 base_link 下的 XY（米）。
+# 目标位姿 = [X, Y, 人工 Z, 人工固定四元数]：
+#   Z / 四元数 为空时依次取 config 的 orientation_path（标定网页保存的目标）
+#   和 manifest 里的 default_z_m / default_quaternion_xyzw。
+#
+# 这个工具只返回位姿，不下发任何运动，适合先在现场核对数值。
+[contract]
+id          = "robonix/skill/arm7aix_grasp/pixel_to_pose"
+version     = "1"
+kind        = "skill"
+idl         = "arm7aix_grasp/srv/PixelToPose.srv"
+description = "Convert one camera pixel (u,v) to a base_link pose: calibrated hand-eye homography -> XY (metres), plus the configured/manual flange Z and fixed quaternion xyzw. Computes only; no arm motion."
+
+[mode]
+type = "rpc"
+
+[semantics]
+user_invocable = true

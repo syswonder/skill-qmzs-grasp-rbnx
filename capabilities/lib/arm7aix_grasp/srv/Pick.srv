@@ -1,0 +1,34 @@
+# 感知抓取：找目标 → 计算 base_link 位姿 → 抓取流程。
+#
+# 两种定位方式（二选一）：
+#   - pixel 非空：解析 "u,v"（标定分辨率像素），走与 pixel_to_pose 相同的
+#     手眼标定换算；适用于外部视觉程序/标定网页点选。
+#   - pixel 为空：用 VLM 开放词汇检测 object（需要 vlm_* 配置 + 相机原语）。
+#
+# 位姿 = 标定 XY + 人工 Z + 固定四元数；随后：
+#   张手 → hover → 下降到目标 → 闭合手 → 等待 → 抬回 hover。
+string object
+
+# 可选像素 "u,v"；为空则用 VLM 检测 object。
+string pixel
+---
+bool ok
+# true = 找到了目标（pixel 模式或 VLM 检出）；false = 未找到/定位失败。
+bool found
+bool reached
+bool timed_out
+string message
+string class_name
+
+# 抓取点像素（标定分辨率）与目标位姿。
+float64 u
+float64 v
+float64 x
+float64 y
+float64 z
+float64 qx
+float64 qy
+float64 qz
+float64 qw
+
+float64 elapsed_sec

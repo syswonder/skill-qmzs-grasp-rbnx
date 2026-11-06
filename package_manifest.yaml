@@ -1,0 +1,78 @@
+manifestVersion: 1
+
+# arm7aix_grasp — ARM7AIX 七轴 + LinkerHand O6 抓取技能。
+#
+# 高层抓取流程（grab/pick/release/home/place）＋底层视觉/运动辅助工具
+# （pixel_to_pose/move_to_pixel/detect_object/move_to_object/calibration_status/
+# snapshot），参考 robonix.skill.jaka_grasp 的组织方式。
+#
+# 技能本身不碰硬件：
+#   - 像素→XY 使用 handeye-calibration 产出的平面单应矩阵（固定相机 + 桌面标定面），
+#     或 manifest 里直接配置的 3x3 矩阵；
+#   - 运动只向 arm7aix_controller 原语的 ROS 2 契约
+#       robonix/primitive/arm/pos_command  (geometry_msgs/Pose)
+#     发布目标位姿，并从
+#       robonix/primitive/arm/end_pose      (geometry_msgs/Pose)
+#     读取实测反馈判断是否到位。关节限位、七轴 IK、轨迹规划、故障保护都在原语里。
+#
+# 像素来源两种：
+#   1) 调用方直接给 (u,v)（外部视觉程序、标定网页点选）→ pixel_to_pose / move_to_pixel；
+#   2) 技能内 VLM 开放词汇检测：相机取帧 → OpenAI 兼容多模态端点 → 有向框 →
+#      抓取点像素 → 位姿 → 运动（detect_object / move_to_object）。
+# 相机原语（robonix.primitive.orbbec.camera）提供 RGB；VLM 需要 config vlm_* 或
+# 环境变量 VLM_BASE_URL / VLM_API_KEY / VLM_MODEL。
+
+package:
+  name: robonix.skill.arm7aix.grasp
+  version: 0.1.0
+  description: >-
+    ARM7AIX 七轴 + LinkerHand O6 抓取技能：固定位姿/感知抓取、放置、释放、
+    关节复位；手眼标定像素→基座 XY + 人工 Z + 固定四元数，两级接近避免碰倒
+    物体。MCP 工具：grab/pick/release/home/place + pixel_to_pose/move_to_pixel/
+    detect_object/move_to_object/calibration_status/snapshot。
+  tags: [skill, grasp, pick, place, handeye, vlm, arm7aix, linkerhand, o6]
+  maintainers:
+    - ARM7AIX maintainers
+  license: MulanPSL-2.0
+
+build: bash scripts/build.sh
+start: bash scripts/start.sh
+
+# 本包自己的 MCP 契约（capabilities/*.v1.toml + capabilities/lib/arm7aix_grasp/srv/）。
+capabilities:
+  - name: robonix/skill/arm7aix_grasp/driver
+    path: capabilities/driver.v1.toml
+  - name: robonix/skill/arm7aix_grasp/grab
+    path: capabilities/grab.v1.toml
+  - name: robonix/skill/arm7aix_grasp/pick
+    path: capabilities/pick.v1.toml
+  - name: robonix/skill/arm7aix_grasp/release
+    path: capabilities/release.v1.toml
+  - name: robonix/skill/arm7aix_grasp/home
+    path: capabilities/home.v1.toml
+  - name: robonix/skill/arm7aix_grasp/place
+    path: capabilities/place.v1.toml
+  - name: robonix/skill/arm7aix_grasp/pixel_to_pose
+    path: capabilities/pixel_to_pose.v1.toml
+  - name: robonix/skill/arm7aix_grasp/move_to_pixel
+    path: capabilities/move_to_pixel.v1.toml
+  - name: robonix/skill/arm7aix_grasp/detect_object
+    path: capabilities/detect_object.v1.toml
+  - name: robonix/skill/arm7aix_grasp/move_to_object
+    path: capabilities/move_to_object.v1.toml
+  - name: robonix/skill/arm7aix_grasp/calibration_status
+    path: capabilities/calibration_status.v1.toml
+  - name: robonix/skill/arm7aix_grasp/snapshot
+    path: capabilities/snapshot.v1.toml
+
+# 运行时通过 atlas 发现的硬件契约（本技能是纯消费者）。
+# arm 契约由 arm7aix_controller 原语提供；camera/rgb 由相机原语提供（可选，
+# 只服务 snapshot；没有相机时其余工具照常工作）。
+depends:
+  - name: robonix/primitive/arm/pos_command
+  - name: robonix/primitive/arm/end_pose
+  - name: robonix/primitive/arm/joint_states
+  - name: robonix/primitive/arm/joint_command
+  - name: robonix/primitive/camera/rgb
+  - name: robonix/primitive/hand/info
+  - name: robonix/primitive/hand/move_joint

@@ -1,0 +1,11 @@
+# 关节空间复位：七轴移动到配置的 home_joints（rad），手不动作。
+# 通过 arm7aix_controller 的 joint_command 下发，等 joint_states 进入
+# joint_tolerance_rad 容差。请求无字段（工具无参数）。
+---
+bool ok
+bool reached
+bool timed_out
+string message
+float64 elapsed_sec
+# 返回时最后一次 joint_states 实测位置（rad，顺序见 config joint_names）。
+float64[7] final_positions

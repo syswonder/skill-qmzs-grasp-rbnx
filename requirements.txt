@@ -1,0 +1,15 @@
+# Runtime deps of the skill process. In the Robonix deployment this package runs
+# with the deployment venv (RBNX_PYTHON, created with --system-site-packages so
+# rclpy / cv2 / numpy from the host ROS install stay visible); the list documents
+# what that environment must provide and can be used to create a package-local
+# venv (`python3 -m venv --system-site-packages .venv`).
+grpcio>=1.60,<2
+protobuf>=4,<7
+mcp>=1.27,<2
+fastmcp>=3,<5
+pyyaml>=6
+numpy>=1.26,<2
+# opencv is provided by the host ROS/OpenCV install in the deployment.
+opencv-python>=4.8
+# codegen interpreter extras (rbnx codegen --python <venv python>)
+grpcio-tools>=1.60,<2

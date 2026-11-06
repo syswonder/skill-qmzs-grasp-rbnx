@@ -1,0 +1,18 @@
+# robonix/skill/arm7aix_grasp/grab — 固定位姿抓取：张手 → 两级接近 → 闭合手 → 抬起。
+#
+# 用户意图：“抓住 / 抓一下 / 在这里抓”。不需要感知：grasp_pose（[x, y, z] 米，
+# base_link）来自部署 manifest 的 skill config；姿态用固定四元数（目标设置）。
+# 机械臂经 arm7aix_controller 的 pos_command / end_pose；手部经 o6_hand 的
+# hand/move_joint（官方 open/fist 预设）。同步阻塞到流程结束或超时。
+# 请求无字段（工具无参数）。
+[contract]
+id      = "robonix/skill/arm7aix_grasp/grab"
+version = "1"
+kind    = "skill"
+idl     = "arm7aix_grasp/srv/Grab.srv"
+
+[mode]
+type = "rpc"
+
+[semantics]
+user_invocable = true

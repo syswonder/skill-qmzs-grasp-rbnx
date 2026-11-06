@@ -1,0 +1,16 @@
+# robonix/skill/arm7aix_grasp/place — 把手中物体放下：hover → 下降 → 张手 → 抬起。
+#
+# 用户意图：“放下 / 放到这里”。place_pose（[x, y, z] 米）来自部署 manifest；
+# 未配置时原地放下（当前末端 XY + 配置的目标 Z）。与 release 的区别是
+# 张手发生在下降到放置点之后。请求无字段（工具无参数）。
+[contract]
+id      = "robonix/skill/arm7aix_grasp/place"
+version = "1"
+kind    = "skill"
+idl     = "arm7aix_grasp/srv/Place.srv"
+
+[mode]
+type = "rpc"
+
+[semantics]
+user_invocable = true

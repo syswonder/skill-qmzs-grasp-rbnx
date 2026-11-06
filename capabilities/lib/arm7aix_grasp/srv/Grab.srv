@@ -1,0 +1,14 @@
+# 抓取流程：在配置的 grasp_pose 处完成
+#   张手 → hover（目标正上方 approach_height_m）→ 下降到目标 → 闭合手
+#   → 等待 hand_close_settle_s → 抬回 hover 并保持。
+#
+# 位姿固定：grasp_pose = [x, y, z]（米，base_link）+ 固定四元数（目标设置）；
+# 不需要感知。若没有配置 grasp_pose，请用 pick（VLM/像素驱动）。
+# 请求无字段（工具无参数）。
+---
+bool ok
+# true = 接近/下降/闭合/抬起全部完成；抬起失败时仍可能为 false 但物体已在手中。
+bool reached
+bool timed_out
+string message
+float64 elapsed_sec

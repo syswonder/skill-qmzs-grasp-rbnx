@@ -1,0 +1,9 @@
+# No request fields: read-only status of the loaded calibration/targets.
+---
+# true = a homography (from the calibration file or inline config) is loaded.
+bool calibrated
+string message
+
+# JSON string with: homography source/path, matrix, camera intrinsics,
+# workspace hull size, default Z and quaternion plus their sources.
+string details_json

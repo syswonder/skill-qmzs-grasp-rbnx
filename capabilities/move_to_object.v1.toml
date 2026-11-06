@@ -1,0 +1,16 @@
+# VLM 检测 + 运动：自然语言目标 → 位姿 → arm7aix_controller pos_command。
+#
+# 与 detect_object 相同的检测/换算链路，随后发布 Pose 并等 end_pose 到位。
+# 选“最近的红色积木”“把机械臂移到蓝色方块上方”这类指令。
+[contract]
+id          = "robonix/skill/arm7aix_grasp/move_to_object"
+version     = "1"
+kind        = "skill"
+idl         = "arm7aix_grasp/srv/MoveToObject.srv"
+description = "Detect a named object with a VLM, convert it to a base_link pose (calibrated XY + configured/manual Z and fixed quaternion), then move the arm there via arm primitive pos_command and report reached/timed_out. Blocks until done."
+
+[mode]
+type = "rpc"
+
+[semantics]
+user_invocable = true

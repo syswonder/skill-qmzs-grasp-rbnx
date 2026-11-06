@@ -1,0 +1,8 @@
+# 原地张开 O6 手：零机械臂运动，只发 hand/move_joint open 预设。
+# 请求无字段（工具无参数）。
+---
+bool ok
+bool reached
+bool timed_out
+string message
+float64 elapsed_sec

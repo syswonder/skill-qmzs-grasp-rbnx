@@ -1,0 +1,9 @@
+# Build/runtime products of this package (never commit)
+rbnx-build/
+logs/
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+.pytest_cache/
+*.log

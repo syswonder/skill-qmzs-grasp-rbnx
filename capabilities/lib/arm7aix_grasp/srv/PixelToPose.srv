@@ -1,0 +1,32 @@
+# Pixel (u, v) in the calibration image resolution -> base_link pose.
+#
+# u/v are in the resolution the hand-eye calibration was solved at (the
+# calibration artifact's camera.width x camera.height, normally 640x480).
+# They are undistorted with the calibrated intrinsics before the homography.
+float64 u
+float64 v
+
+# Optional target flange Z, metres. Empty = configured target.
+# NOTE: ignored unless config allow_tool_overrides=true; keep it empty and let the
+# deployment config decide the fixed Z. Accepts "0.1024", "102.4mm".
+string z
+
+# Optional flange orientation "qx,qy,qz,qw" (xyzw). Empty = configured target.
+# NOTE: ignored unless config allow_tool_overrides=true; do NOT invent a quaternion.
+string quaternion
+---
+bool ok
+string message
+
+# Target pose in base_link: metres + quaternion xyzw (tool0/flange centre).
+float64 x
+float64 y
+float64 z
+float64 qx
+float64 qy
+float64 qz
+float64 qw
+
+# The undistorted pixel that was actually fed to the homography.
+float64 undistorted_u
+float64 undistorted_v

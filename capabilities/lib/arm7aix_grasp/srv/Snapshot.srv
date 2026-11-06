@@ -1,0 +1,10 @@
+# Optional short label used in the saved file name (sanitised).
+string label
+---
+bool ok
+string message
+
+# Absolute path of the saved JPEG (empty on failure).
+string path
+uint32 width
+uint32 height

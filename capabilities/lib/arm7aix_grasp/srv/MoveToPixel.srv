@@ -1,0 +1,43 @@
+# Pixel (u, v) in the calibration image resolution -> base_link pose -> motion.
+#
+# Geometry is identical to pixel_to_pose (undistort -> homography -> XY,
+# then the configured/manual flange Z and fixed quaternion xyzw). The composed
+# pose is published on the arm primitive's pos_command topic and the tool waits
+# for end_pose feedback to reach it.
+float64 u
+float64 v
+
+# Optional target flange Z, metres. Empty = configured target.
+# Ignored unless config allow_tool_overrides=true.
+string z
+
+# Optional flange orientation "qx,qy,qz,qw". Empty = configured target.
+# Ignored unless config allow_tool_overrides=true.
+string quaternion
+---
+bool ok
+# true = end_pose feedback reached the target within the configured tolerances.
+bool reached
+# true = motion_timeout_s elapsed without reaching the target.
+bool timed_out
+string message
+
+# The pose that was commanded (base_link, metres + xyzw).
+float64 x
+float64 y
+float64 z
+float64 qx
+float64 qy
+float64 qz
+float64 qw
+
+# The last measured end_pose when the call returned (zeros when no feedback).
+float64 final_x
+float64 final_y
+float64 final_z
+float64 final_qx
+float64 final_qy
+float64 final_qz
+float64 final_qw
+
+float64 elapsed_sec

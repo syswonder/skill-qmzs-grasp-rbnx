@@ -1,0 +1,10 @@
+# 放置流程：把手中物体放到配置的 place_pose，或原地放下。
+#   hover → 下降到放置点 → 张开手 → 等待 hand_open_settle_s → 抬回 hover。
+# place_pose 未配置时：用当前末端 XY + 配置的目标 Z 作为放置点（原地放下）。
+# 请求无字段（工具无参数）。
+---
+bool ok
+bool reached
+bool timed_out
+string message
+float64 elapsed_sec
