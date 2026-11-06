@@ -16,6 +16,8 @@ Provider id `qmzs_grasp`，namespace `robonix/skill/qmzs_grasp`。LLM 工具名�
 `o6_hand` 原语的 `hand/move_joint` 下发 open/fist 预设。关节限位、七轴 IK、
 轨迹规划、故障保护都在原语里。
 
+真机验证：2026-11-05 `pick` 抓取流程已在 ARM7AIX + O6 实机通过（详见 [VALIDATION.md](VALIDATION.md)）。
+
 ## 坐标系与单位
 
 - 位姿一律在 `base_link`，位置米，四元数 xyzw，参考点是法兰中心 `tool0`
@@ -64,8 +66,10 @@ Provider id `qmzs_grasp`，namespace `robonix/skill/qmzs_grasp`。LLM 工具名�
   （raw 255=张开 → 契约归一化 `1-raw/255`，1=闭合）。可用
   `hand_open_values` / `hand_close_values` 覆盖（长度 6，[0,1]）。
 - O6 运动较慢（完全到位约 10~15 s）；命令下发后按 `hand_open_settle_s` /
-  `hand_close_settle_s` 等待，**没有位置反馈验证**（本技能不消费 get_state）。
-  抓取是否成功请现场观察手指/物体；消息里会注明“unverified”式限制说明。
+  `hand_close_settle_s` 等待，**没有位置反馈闭环**（本技能不消费 get_state）。
+  2026-11-05 已在真机上用 `pick` 抓取绿色方块成功（张手 → hover → 下降 →
+  闭合 → 抬起，方块离桌），见 [VALIDATION.md](VALIDATION.md)；日常仍建议
+  现场观察手指/物体。
 - `release` / `place` 只张开手；`grab` / `pick` 闭合手；`home` 不动手。
 
 ## VLM 检测（detect_object / move_to_object）
