@@ -8,10 +8,10 @@
 #
 # 这个工具只返回位姿，不下发任何运动，适合先在现场核对数值。
 [contract]
-id          = "robonix/skill/arm7aix_grasp/pixel_to_pose"
+id          = "robonix/skill/qmzs_grasp/pixel_to_pose"
 version     = "1"
 kind        = "skill"
-idl         = "arm7aix_grasp/srv/PixelToPose.srv"
+idl         = "qmzs_grasp/srv/PixelToPose.srv"
 description = "Convert one camera pixel (u,v) to a base_link pose: calibrated hand-eye homography -> XY (metres), plus the configured/manual flange Z and fixed quaternion xyzw. Computes only; no arm motion."
 
 [mode]

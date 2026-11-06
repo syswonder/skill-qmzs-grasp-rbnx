@@ -1,13 +1,13 @@
-# robonix/skill/arm7aix_grasp/release — 原地张开手（零机械臂运动）。
+# robonix/skill/qmzs_grasp/release — 原地张开手（零机械臂运动）。
 #
 # 用户意图：“放开 / 松手 / 释放”。只发 hand/move_joint 的 open 预设，
 # 不移动机械臂；物体留在当前位置（空中松手用 release，放置用 place）。
 # 请求无字段（工具无参数）。
 [contract]
-id      = "robonix/skill/arm7aix_grasp/release"
+id      = "robonix/skill/qmzs_grasp/release"
 version = "1"
 kind    = "skill"
-idl     = "arm7aix_grasp/srv/Release.srv"
+idl     = "qmzs_grasp/srv/Release.srv"
 
 [mode]
 type = "rpc"

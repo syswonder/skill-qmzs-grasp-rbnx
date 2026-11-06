@@ -1,4 +1,4 @@
-# arm7aix_grasp 技能运行配置（robonix_manifest.yaml 里 skill: - name: arm7aix_grasp
+# qmzs_grasp 技能运行配置（robonix_manifest.yaml 里 skill: - name: qmzs_grasp
 # 的 config 块，整段以 JSON 传给 on_init）。
 #
 # 本文件只说明字段与默认值；现场请按机械臂/标定结果覆盖。

@@ -23,7 +23,7 @@ from .motion import MoveOutcome, move_waypoints, plan_waypoints
 from .ros_bridge import PoseSample, RosBridge
 from .target import Target
 
-log = logging.getLogger("arm7aix_grasp.grasp")
+log = logging.getLogger("qmzs_grasp.grasp")
 
 
 def _hand_label(hand) -> str:
@@ -267,7 +267,7 @@ def home_arm(
     if config.home_joints is None:
         raise ConfigError(
             "未配置 home_joints（7 个 rad）；请在 manifest 的 "
-            "arm7aix_grasp config 里设置后再调用 home"
+            "qmzs_grasp config 里设置后再调用 home"
         )
     if config.dry_run:
         return MoveOutcome(

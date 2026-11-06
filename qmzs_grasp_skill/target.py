@@ -24,7 +24,7 @@ from .calibration import (
 )
 from .config import ConfigError, SkillConfig, finite, parse_metres, parse_quaternion
 
-log = logging.getLogger("arm7aix_grasp.target")
+log = logging.getLogger("qmzs_grasp.target")
 
 
 class Target:
