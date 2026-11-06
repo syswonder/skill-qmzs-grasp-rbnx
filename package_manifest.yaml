@@ -24,7 +24,7 @@ manifestVersion: 1
 
 package:
   name: robonix.skill.qmzs.grasp
-  version: 0.1.0
+  version: 0.1.2
   description: >-
     ARM7AIX 七轴 + LinkerHand O6 抓取技能：固定位姿/感知抓取、放置、释放、
     关节复位；手眼标定像素→基座 XY + 人工 Z + 固定四元数，两级接近避免碰倒
@@ -32,7 +32,7 @@ package:
     detect_object/move_to_object/calibration_status/snapshot。
   tags: [skill, grasp, pick, place, handeye, vlm, arm7aix, linkerhand, o6]
   maintainers:
-    - ARM7AIX maintainers
+    - Joker.Yun <2353493891@qq.com>
   license: MulanPSL-2.0
 
 build: bash scripts/build.sh
