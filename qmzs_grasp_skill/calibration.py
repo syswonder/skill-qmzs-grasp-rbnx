@@ -33,7 +33,7 @@ from .config import (
     normalize_quaternion,
 )
 
-log = logging.getLogger("arm7aix_grasp.calibration")
+log = logging.getLogger("qmzs_grasp.calibration")
 
 _MAX_ABS_BASE_XY_M = 5.0  # 明显超出机械臂工作范围的投影视为标定矩阵异常
 

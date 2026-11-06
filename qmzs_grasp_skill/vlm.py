@@ -10,7 +10,7 @@ JSON（有向框：中心/长边/短边/倾角）。技能再用标定单应把�
 框中心 —— 框中心在物体可见投影的中部（高于桌面）。`contact_ratio` 在
 框中心（0）和底部中点（1）之间插值；相机有倾角时取 0.5 左右，近正俯视时取 0。
 
-这里没有深度：VLM 只给 2D 框，Z 仍由人工指定（与 arm7aix_grasp 的其它工具一致）。
+这里没有深度：VLM 只给 2D 框，Z 仍由人工指定（与 qmzs_grasp 的其它工具一致）。
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ import urllib.request
 from dataclasses import dataclass
 from typing import Optional
 
-log = logging.getLogger("arm7aix_grasp.vlm")
+log = logging.getLogger("qmzs_grasp.vlm")
 
 
 class VlmError(RuntimeError):

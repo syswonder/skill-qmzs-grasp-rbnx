@@ -5,10 +5,10 @@
 # 适合“这个像素/这个物体在哪里”“把红杯子换算成机械臂坐标”这类问题；
 # 需要相机原语在线 + VLM 端点配置（config vlm_* 或环境变量 VLM_*）。
 [contract]
-id          = "robonix/skill/arm7aix_grasp/detect_object"
+id          = "robonix/skill/qmzs_grasp/detect_object"
 version     = "1"
 kind        = "skill"
-idl         = "arm7aix_grasp/srv/DetectObject.srv"
+idl         = "qmzs_grasp/srv/DetectObject.srv"
 description = "Detect a named object with a VLM from the camera primitive, convert its grasp point pixel to a base_link pose (calibrated XY + configured/manual Z and fixed quaternion). Computes only; no arm motion."
 
 [mode]

@@ -27,7 +27,7 @@ from .config import ConfigError, SkillConfig, check_workspace
 from .ros_bridge import PoseSample, RosBridge
 from .target import Target
 
-log = logging.getLogger("arm7aix_grasp.motion")
+log = logging.getLogger("qmzs_grasp.motion")
 
 
 @dataclass
